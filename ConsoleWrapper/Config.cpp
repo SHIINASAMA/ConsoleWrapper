@@ -1,6 +1,6 @@
 #include "Config.h"
 
-Config::Config(std::map<std::string, std::string>* map) {
+Config::Config(std::map<std::wstring, std::wstring>* map) {
 	this->attributes = map;
 }
 
@@ -10,7 +10,7 @@ Config::~Config() {
 	}
 }
 
-const char* Config::get(const std::string& key) {
+const wchar_t* Config::get(const std::wstring& key) {
 	auto value = attributes->find(key);
 	if (value == attributes->end()) {
 		return nullptr;
@@ -20,7 +20,7 @@ const char* Config::get(const std::string& key) {
 	}
 }
 
-void Config::put(const std::string& key, const std::string& value) {
+void Config::put(const std::wstring& key, const std::wstring& value) {
 	attributes->emplace(key, value);
 }
 

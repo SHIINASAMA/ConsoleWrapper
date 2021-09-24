@@ -4,11 +4,11 @@
 
 Config::ptr ConfigHelper::BuildConfig()
 {
-	auto map = new std::map<std::string, std::string>();
-	std::ifstream stream;
+	auto map = new std::map<std::wstring, std::wstring>();
+	std::wifstream stream;
 	stream.open("config.ini", std::ios::in);
 	if (stream.good()) {
-		char buffer[1024]{0};
+		wchar_t buffer[1024]{0};
 		while (!stream.eof()) {
 			stream.getline(buffer, 1024);
 			int length = stream.gcount();
@@ -21,14 +21,18 @@ Config::ptr ConfigHelper::BuildConfig()
 			}
 
 			if (spilt != -1) {
-				char keyBuffer[1024]{0};
-				char valueBuffer[1024]{ 0 };
-				memcpy_s(keyBuffer, 1024, buffer, spilt);
-				memcpy_s(valueBuffer, 1024, buffer + spilt + 1, length - spilt - 1);
-				map->emplace(std::string{ keyBuffer }, std::string{ valueBuffer });
+				wchar_t* keyBuffer = nullptr;
+				wchar_t* valueBuffer = nullptr;
+				//memcpy_s(keyBuffer, 1024, buffer, spilt);
+				//memcpy_s(valueBuffer, 1024, buffer + spilt + 1, length - spilt - 1);
+				keyBuffer = wcstok(buffer, L"=", &valueBuffer);
+				map->emplace(std::wstring{ keyBuffer }, std::wstring{ valueBuffer });
 			}
 		}
 		stream.close();
+	}
+	else {
+		printf_s("%s\n", strerror(errno));
 	}
 	return std::make_shared<Config>(map);
 }
