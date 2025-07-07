@@ -11,6 +11,7 @@ Windows 下的控制台程序包装器
 模板如下：
 
 ```ini
+[DEFAULT]
 title=xxx
 icon=xxx.ico
 cmd=xxx
