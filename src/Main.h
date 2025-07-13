@@ -2,42 +2,34 @@
 
 #include <Windows.h>
 
-#define MY_NOTIFY (WM_USER+1)
 
-#define IDM_SHOW (WM_USER+2)
-#define IDM_HIDE (WM_USER+3)
-#define IDM_EXIT (WM_USER+4)
+namespace cw {
+    const auto NAME = "Console Wrapper";
+    const int MY_NOTIFY(WM_USER + 1);
 
-#define NAME "Console Wrapper"
+    const int IDM_SHOW(WM_USER + 2);
+    const int IDM_HIDE(WM_USER + 3);
+    const int IDM_EXIT(WM_USER + 4);
 
-inline HICON hIcon;
-inline HWND hWindowWnd;
-inline HWND hConsoleWnd;
-inline HINSTANCE hInstance;
-inline WNDCLASSEX wcex{0};
-inline NOTIFYICONDATA data;
+    void checkDebug();
 
-inline HANDLE workerThreadHandle;
-inline DWORD workerThreadId;
+    void showLastError();
 
-inline HMENU hMenu;
+    LRESULT CALLBACK wndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-void showLastError();
+    void loadIcon(LPCSTR path);
 
-LRESULT CALLBACK wndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+    void loadIcon(WORD id);
 
-void loadIcon(LPCSTR path);
+    void regClass(LPCSTR className);
 
-void loadIcon(WORD id);
+    void initWnd(LPCSTR className, LPCSTR title);
 
-void regClass(LPCSTR className);
+    void createNotify(LPCSTR title);
 
-void initWnd(LPCSTR className, LPCSTR title);
+    void releaseNotify();
 
-void createNotify(LPCSTR title);
+    void windowLoop();
 
-void releaseNotify();
-
-void windowLoop();
-
-void execCmd(LPCSTR cmd);
+    void execCmd(LPSTR cmd);
+}

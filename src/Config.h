@@ -42,5 +42,5 @@ struct Config {
 
     [[nodiscard]] const char *getIconPath() const { return iconPath; }
     [[nodiscard]] const char *getTitle() const { return title; }
-    [[nodiscard]] const char *getCmd() const { return cmd; }
+    [[nodiscard]] char *getCmd() { return cmd; }
 };
